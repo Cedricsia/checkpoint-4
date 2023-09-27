@@ -24,9 +24,17 @@ app.use(
 
 // import and mount the API routes
 
-const router = require("./router");
+const propertyRouter = require("./routes/property.routes");
+const userRouter = require("./routes/user.routes");
+const equipmentRouter = require("./routes/equipment.routes");
+const propertyEquipmentRouter = require("./routes/propertyEquipment.routes");
+const userRentProperty = require("./routes/userRentProperty.routes");
 
-app.use(router);
+app.use(propertyRouter);
+app.use(userRouter);
+app.use(equipmentRouter);
+app.use(propertyEquipmentRouter);
+app.use(userRentProperty);
 
 // serve the `backend/public` folder for public resources
 
