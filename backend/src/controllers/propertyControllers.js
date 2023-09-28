@@ -27,6 +27,44 @@ const read = (req, res) => {
       res.sendStatus(500);
     });
 };
+
+const edit = (req, res) => {
+  const property = req.body;
+
+  // TODO validations (length, format...)
+
+  property.id = parseInt(req.params.id, 10);
+
+  models.property
+    .update(property)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const destroy = (req, res) => {
+  models.property
+    .delete(req.params.id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 const search = (req, res) => {
   let result = {};
   models.property.find(req.params.id).then(([rows]) => {
@@ -54,53 +92,27 @@ const search = (req, res) => {
     });
 };
 
-const edit = (req, res) => {
-  const property = req.body;
-
-  // TODO validations (length, format...)
-
-  property.id = parseInt(req.params.id, 10);
-
-  models.property
-    .update(property)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
 const add = (req, res) => {
-  const property = req.body;
-
-  // TODO validations (length, format...)
+  let propertyId = 0;
+  const property = JSON.parse(req.body.property);
+  const equipments = JSON.parse(req.body.equipments);
+  const arryfile = req.files.map((elem) => elem.filename);
+  property.description.image = arryfile;
 
   models.property
     .insert(property)
     .then(([result]) => {
-      res.location(`/propertys/${result.insertId}`).sendStatus(201);
+      propertyId = result.insertId;
+      const equipmentsPromise = equipments.map((elem) => {
+        return models.property_has_equipment.insert({
+          equipment_id: elem.id,
+          property_id: propertyId,
+        });
+      });
+      return Promise.all([...equipmentsPromise]);
     })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
-const destroy = (req, res) => {
-  models.property
-    .delete(req.params.id)
-    .then(([result]) => {
-      if (result.affectedRows === 0) {
-        res.sendStatus(404);
-      } else {
-        res.sendStatus(204);
-      }
+    .then(() => {
+      res.location(`/property/${propertyId}`).sendStatus(201);
     })
     .catch((err) => {
       console.error(err);

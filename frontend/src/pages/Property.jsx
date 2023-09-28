@@ -112,15 +112,13 @@ function Property() {
                   {all.property.name}
                 </h1>
                 <p className=" text-primary">{all.property.localisation}</p>
-                <p className="italic">
-                  {all.property.description.pieces} Pièces
-                </p>
+                <p className="italic">{all.property.pieces} Pièces</p>
               </div>
               <div
                 id="description "
                 className="mx-3 py-5 border-y border-primary"
               >
-                <p className="italic">{all.property.description.information}</p>
+                <p className="italic">{all.property.information}</p>
               </div>
               <div className="my-5 mx-3">
                 <h1 className="font-bold text-center">Équiment</h1>

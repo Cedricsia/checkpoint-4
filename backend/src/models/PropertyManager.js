@@ -5,10 +5,20 @@ class PropertyManager extends AbstractManager {
     super({ table: "property" });
   }
 
-  insert(item) {
-    return this.database.query(`insert into ${this.table} (title) values (?)`, [
-      item.title,
-    ]);
+  insert(property) {
+    const descriptionJSON = JSON.stringify(property.description);
+
+    return this.database.query(
+      `insert into ${this.table} (name, description, localisation, price, information, pieces ) values (?,?,?,?,?,?)`,
+      [
+        property.name,
+        descriptionJSON,
+        property.localisation,
+        property.price,
+        property.information,
+        property.pieces,
+      ]
+    );
   }
 
   update(item) {
