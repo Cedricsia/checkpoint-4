@@ -1,17 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import expressAPI from "../services/ExpressApi";
 
 function ModalConnexion() {
+  const [fields, setFields] = useState({ mail: "", password: "" });
+
   const openCreateAccountModal = () => {
     document.getElementById("login").close();
     document.getElementById("creationModal").showModal();
   };
+  const handleChange = (e) => {
+    setFields({ ...fields, [e.target.id]: e.target.value });
+  };
+
   const closeModal = () => {
     document.getElementById("login").close();
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (fields.mail.length && fields.password.length) {
+      expressAPI
+        .post("/auth/sign-in", fields)
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res.data.id));
+          document.getElementById("login").close();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  };
+
   return (
     <dialog id="login" className="bg-transparent drop-shadow-lg modal">
       <form
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         method="dialog"
         className="modal-box shadow-none bg-secondary text-base-content md:w-[56rem]"
       >
@@ -20,18 +44,18 @@ function ModalConnexion() {
           <p className="pt-4 pb-1 text-left font-bold">Email</p>
           <input
             id="mail"
-            // value={fields.mail}
+            value={fields.mail}
             name="mail"
-            // onChange={handleChange}
+            onChange={handleChange}
             type="mail"
             className="bg-accent rounded-md h-10 px-4 w-full focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <p className="pt-4 pb-1 text-left font-bold">Mot de passe</p>
           <input
             id="password"
-            // value={fields.password}
+            value={fields.password}
             name="password"
-            // onChange={handleChange}
+            onChange={handleChange}
             type="password"
             className="bg-accent rounded-md h-10 px-4 w-full focus:outline-none focus:ring-2 focus:ring-primary"
           />

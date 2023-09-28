@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
 import { useForm } from "react-hook-form";
-// import expressAPI from "../services/ExpressApi";
+import expressAPI from "../services/ExpressApi";
 
 function ModalCreateAccount() {
   const {
     register,
-    // handleSubmit,
+    handleSubmit,
     formState: { errors },
     watch,
   } = useForm();
@@ -16,19 +16,17 @@ function ModalCreateAccount() {
     document.getElementById("creationModal").close();
   };
 
-  //   const onSubmit = (data) => {
-  //     console.log("hello");
-  //     expressAPI
-  //       .post("/auth/sign-up", data)
-  //       .then(() => {
-  //         console.log("Votre inscription a réussi. Vous pouvez vous connecter.");
-  //         document.getElementById("creationModal").close();
-  //         document.getElementById("connectionModal").showModal();
-  //       })
-  //       .catch(() => {
-  //         console.log("Une erreur est survenue");
-  //       });
-  //   };
+  const onSubmit = (data) => {
+    expressAPI
+      .post("/auth/sign-up", data)
+      .then(() => {
+        document.getElementById("creationModal").close();
+        document.getElementById("connectionModal").showModal();
+      })
+      .catch(() => {
+        console.error("Une erreur est survenue");
+      });
+  };
 
   return (
     <div>
@@ -43,7 +41,7 @@ function ModalCreateAccount() {
           <h2 className="font-bold text-xl mb-4 text-center">
             Créer un compte
           </h2>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="md:grid md:grid-cols-2 md:gap-7 text-left">
               <div>
                 <label htmlFor="firstname" className="pt-4 pb-1  font-bold">
