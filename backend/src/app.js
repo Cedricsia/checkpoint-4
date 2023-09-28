@@ -30,6 +30,7 @@ const userRouter = require("./routes/user.routes");
 const equipmentRouter = require("./routes/equipment.routes");
 const propertyEquipmentRouter = require("./routes/propertyEquipment.routes");
 const userRentProperty = require("./routes/userRentProperty.routes");
+const authRouter = require("./routes/auth.routes");
 
 app.use(propertyRouter);
 app.use(userRouter);
@@ -37,6 +38,7 @@ app.use(equipmentRouter);
 app.use(propertyEquipmentRouter);
 app.use(userRentProperty);
 
+app.use("/auth", authRouter);
 // serve the `backend/public` folder for public resources
 
 app.use(express.static(path.join(__dirname, "../public")));
