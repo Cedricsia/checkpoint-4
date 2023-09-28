@@ -17,6 +17,13 @@ class PropertyHasEquipmentManager extends AbstractManager {
       [item.title, item.id]
     );
   }
+
+  findWithProperty(id) {
+    return this.database.query(
+      `select e.name from ${this.table} pe inner join equipment e on e.id = pe.equipment_id   where property_id = ?`,
+      [id]
+    );
+  }
 }
 
 module.exports = PropertyHasEquipmentManager;

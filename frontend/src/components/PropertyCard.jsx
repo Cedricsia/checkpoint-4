@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 function PropertyCard({ property }) {
+  const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [num, setnum] = useState(0);
   const handleNext = (arr) => {
@@ -43,9 +45,10 @@ function PropertyCard({ property }) {
           &gt;
         </button>
       </div>
-
-      <p className="font-bold">{property.localisation}</p>
-      <div>{property.price} € par nuit </div>
+      <button type="button" onClick={() => navigate(`property/${property.id}`)}>
+        <p className="font-bold">{property.localisation}</p>
+        <div>{property.price} € par nuit </div>
+      </button>
     </div>
   );
 }
@@ -61,6 +64,7 @@ PropertyCard.defaultProps = {
 
 PropertyCard.propTypes = {
   property: PropTypes.shape({
+    id: PropTypes.number,
     description: PropTypes.shape({
       image: PropTypes.arrayOf(PropTypes.string),
     }),

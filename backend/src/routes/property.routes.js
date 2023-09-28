@@ -5,7 +5,8 @@ const router = express.Router();
 const propertycontrollers = require("../controllers/propertyControllers");
 
 router.get("/property", propertycontrollers.browse);
-router.get("/property/:id", propertycontrollers.read);
+
+router.get("/property/:id", propertycontrollers.search);
 router.put("/property/:id", propertycontrollers.edit);
 router.post("/property", propertycontrollers.add);
 router.delete("/property/:id", propertycontrollers.destroy);

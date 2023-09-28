@@ -27,6 +27,32 @@ const read = (req, res) => {
       res.sendStatus(500);
     });
 };
+const search = (req, res) => {
+  let result = {};
+  models.property.find(req.params.id).then(([rows]) => {
+    if (rows[0] == null) {
+      res.sendStatus(404);
+    } else {
+      result = {
+        property: rows[0],
+      };
+    }
+  });
+
+  models.property_has_equipment
+    .findWithProperty(req.params.id)
+    .then(([equipment]) => {
+      result = {
+        ...result,
+        equipments: equipment,
+      };
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 
 const edit = (req, res) => {
   const property = req.body;
@@ -88,4 +114,5 @@ module.exports = {
   edit,
   add,
   destroy,
+  search,
 };

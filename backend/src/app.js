@@ -17,7 +17,8 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
+    origin: process.env.FRONTEND_URL ?? "http://localhost:3000/",
+    credentials: true,
     optionsSuccessStatus: 200,
   })
 );
@@ -62,7 +63,7 @@ if (fs.existsSync(reactIndexFile)) {
     res.sendFile(reactIndexFile);
   });
 }
-
+app.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 // ready to export
 
 module.exports = app;
