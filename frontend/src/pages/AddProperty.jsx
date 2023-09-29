@@ -38,6 +38,16 @@ function AddProperty() {
     });
   };
 
+  const handleInputChangeNunber = (e, key) => {
+    setReq({
+      ...req,
+      property: {
+        ...req.property,
+        [key]: parseInt(e.target.value, 10),
+      },
+    });
+  };
+
   const submit = () => {
     const formData = new FormData();
     files.forEach((file) => {
@@ -93,10 +103,30 @@ function AddProperty() {
               onChange={(e) => handleInputChange(e, "localisation")}
             />
           </div>
+          <div className="md:flex md:justify-between sm:flex md:flex-col   ">
+            <div className="flex-row justify-between flex my-1 ">
+              <label htmlFor="localisation">Prix de la nuité:</label>
+              <input
+                type="number"
+                className="bg-slate-200 w-32"
+                onChange={(e) => handleInputChangeNunber(e, "price")}
+                inputMode="numeric"
+              />
+            </div>
+            <div className="flex-row justify-between flex  ">
+              <label htmlFor="price">Nombre de pieces:</label>
+              <input
+                type="number"
+                className="bg-slate-200 w-32"
+                onChange={(e) => handleInputChangeNunber(e, "pieces")}
+                inputMode="numeric"
+              />
+            </div>
+          </div>
           <div className="flex-col flex ">
             <label htmlFor="information">Resumé de l'annonce :</label>
             <textarea
-              maxLength={170}
+              maxLength={255}
               type="text"
               className="bg-slate-200 h-28"
               onChange={(e) => handleInputChange(e, "information")}

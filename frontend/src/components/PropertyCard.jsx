@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import left from "../../public/images/arrow-left.svg";
+import right from "../../public/images/arrow-right.svg";
 
 function PropertyCard({ property }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [num, setnum] = useState(0);
   const handleNext = (arr) => {
@@ -18,40 +20,49 @@ function PropertyCard({ property }) {
   };
 
   return (
-    <div className=" m-5 w-32 ">
+    <div className="mb-3 ">
       <div className="relative">
-        <button
-          type="button"
-          className="absolute bg-primary rounded-full text-secondary bottom-1/2 left-0 w-6"
-          onClick={() => {
-            handlePrev(property.description.image);
-          }}
-        >
-          &lt;
-        </button>
         <div className="avatar">
-          <div className=" rounded-xl">
+          <button
+            type="button"
+            className="absolute bg-primary rounded-full text-secondary bottom-1/2 left-0 w-6 "
+            onClick={() => {
+              handlePrev(property.description.image);
+            }}
+          >
+            <img src={left} alt="" />
+          </button>
+          <div
+            className=" h-80 md:h-[22rem] rounded-xl "
+            // onClick={() => navigate(`property/${property.id}`)}
+          >
             <img
               src={`${backendUrl}/uploads/property/${property.description.image[num]}`}
               alt=""
-              className=" w-full rounded-lg"
             />
-            <button
-              type="button"
-              className="absolute bg-primary rounded-full text-secondary bottom-1/2 right-0 w-6  "
-              onClick={() => {
-                handleNext(property.description.image);
-              }}
-            >
-              &gt;
-            </button>
           </div>
+          <button
+            type="button"
+            className="absolute bg-primary rounded-full text-secondary bottom-1/2 right-0 w-6  "
+            onClick={() => {
+              handleNext(property.description.image);
+            }}
+          >
+            <img src={right} alt="" />
+          </button>
         </div>
       </div>
-      <button type="button" onClick={() => navigate(`property/${property.id}`)}>
-        <p className="font-bold">{property.localisation}</p>
-        <div>{property.price} € par nuit </div>
-      </button>
+      <div>
+        <h1 className="font-bold text-lg ">{property.name}</h1>
+        <div className="text-slate-500">
+          <p>{property.localisation}</p>
+          <p>{property.pieces} pieces</p>
+        </div>
+        <div className="flex-row gap-1 flex">
+          <p className="font-bold">{property.price} € </p>
+          <p> par nuit </p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -68,11 +79,13 @@ PropertyCard.defaultProps = {
 PropertyCard.propTypes = {
   property: PropTypes.shape({
     id: PropTypes.number,
+    name: PropTypes.string,
     description: PropTypes.shape({
       image: PropTypes.arrayOf(PropTypes.string),
     }),
     localisation: PropTypes.string,
     price: PropTypes.number,
+    pieces: PropTypes.number,
   }),
 };
 

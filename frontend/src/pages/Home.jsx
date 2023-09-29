@@ -27,7 +27,7 @@ function Home() {
           rechercher
         </button>
       </div>
-      <div className="lg:max-w-7xl md:max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4">
+      <div className="  flex flex-wrap lg:mx-6 justify-center gap-6 ">
         {properties &&
           properties
             .filter((elem) =>
@@ -35,7 +35,9 @@ function Home() {
                 .toLocaleLowerCase()
                 .includes(city.toLocaleLowerCase())
             )
-            .map((property) => <PropertyCard property={property} />)}
+            .map((property) => (
+              <PropertyCard property={property} key={property.id} />
+            ))}
       </div>
       <ModalSearch properties={properties} setCity={setCity} />
     </div>

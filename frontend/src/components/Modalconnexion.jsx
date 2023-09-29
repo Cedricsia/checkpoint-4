@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import expressAPI from "../services/ExpressApi";
 
-function ModalConnexion() {
+function ModalConnexion({ setTest }) {
   const [fields, setFields] = useState({ mail: "", password: "" });
 
   const openCreateAccountModal = () => {
@@ -25,6 +26,7 @@ function ModalConnexion() {
         .then((res) => {
           localStorage.setItem("user", JSON.stringify(res.data.id));
           document.getElementById("login").close();
+          setTest(true);
         })
         .catch((err) => {
           console.error(err);
@@ -93,4 +95,7 @@ function ModalConnexion() {
   );
 }
 
+ModalConnexion.propTypes = {
+  setTest: PropTypes.func.isRequired,
+};
 export default ModalConnexion;

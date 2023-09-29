@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/frontend/public/fonts/Montserrat-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/frontend/public/fonts/Roboto-Regular.ttf");
+}
+
+@layer base {
+  html {
+    font-family: Roboto, sans-serif;
+  }
+  h1 {
+    font-family: Montserrat, sans-serif;
+  }
+}

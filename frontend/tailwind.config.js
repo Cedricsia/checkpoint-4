@@ -2,9 +2,11 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    fontFamily: {
-      text: ["Roboto", "sans-serif"],
-      heading: ["Monserrat", "sans-serif"],
+    extend: {
+      fontFamily: {
+        text: ["Roboto", "sans-serif"],
+        heading: ["Montserrat", "sans-serif"],
+      },
     },
   },
   daisyui: {

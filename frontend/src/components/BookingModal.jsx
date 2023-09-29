@@ -49,13 +49,13 @@ function BookingModal({ all }) {
       {all && (
         <dialog id="my_modal_1" className="modal bg-opacity-25">
           <div className="modal-box bg-secondary">
-            <div className="  bg-secondary rounded-xl  border border-primary">
+            <div className="  bg-secondary rounded-xl  border border-primary p-5">
               <h1 className="p-3 text-center text-primary font-bold">
                 Reservé{" "}
               </h1>
               <div className="flex flex-row justify-center gap-3">
                 <div>
-                  <p>Arrivé</p>
+                  <p>Arrivé:</p>
                   <input
                     type="date"
                     name=""
@@ -64,7 +64,7 @@ function BookingModal({ all }) {
                   />
                 </div>
                 <div>
-                  <p>Départ</p>
+                  <p>Départ:</p>
                   <input
                     type="date"
                     name=""
@@ -76,7 +76,9 @@ function BookingModal({ all }) {
               <div className="text-center py-3">
                 <p>Prix par nuit: {all.property.price} €</p>
               </div>
-              {night && <p className="text-center">nombre de nuit :{night}</p>}
+              {night && (
+                <p className="text-center my-3">nombre de nuit :{night}</p>
+              )}
               <div className="flex flex-row justify-between items-center  px-4">
                 <div className="flex flex-row gap-2">
                   <p className="font-bold">Total:</p>
@@ -89,11 +91,6 @@ function BookingModal({ all }) {
                 >
                   Réserver
                 </button>
-                <form method="dialog">
-                  <button type="button" className="btn">
-                    Close
-                  </button>
-                </form>
               </div>
             </div>
           </div>
