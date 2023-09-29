@@ -12,7 +12,11 @@ const mimeTypes = {
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, path.join(__dirname, "../../public/uploads/property"));
+    if (req.route.path.startsWith("/user")) {
+      callback(null, path.join(__dirname, "../../public/uploads/user"));
+    } else {
+      callback(null, path.join(__dirname, "../../public/uploads/property"));
+    }
   },
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("-").split(".")[0];

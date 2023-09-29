@@ -9,7 +9,7 @@ class PropertyManager extends AbstractManager {
     const descriptionJSON = JSON.stringify(property.description);
 
     return this.database.query(
-      `insert into ${this.table} (name, description, localisation, price, information, pieces ) values (?,?,?,?,?,?)`,
+      `insert into ${this.table} (name, description, localisation, price, information, pieces,user_id ) values (?,?,?,?,?,?,?)`,
       [
         property.name,
         descriptionJSON,
@@ -17,6 +17,7 @@ class PropertyManager extends AbstractManager {
         property.price,
         property.information,
         property.pieces,
+        property.user_id,
       ]
     );
   }
@@ -25,6 +26,13 @@ class PropertyManager extends AbstractManager {
     return this.database.query(
       `update ${this.table} set title = ? where id = ?`,
       [item.title, item.id]
+    );
+  }
+
+  findFromUserId(id) {
+    return this.database.query(
+      `select *  from ${this.table}  where user_id = ?`,
+      [id]
     );
   }
 }

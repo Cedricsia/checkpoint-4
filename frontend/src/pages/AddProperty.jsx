@@ -4,7 +4,6 @@ import ExpressApi from "../services/ExpressApi";
 function AddProperty() {
   const [equip, setEquip] = useState(null);
   const [files, setFiles] = useState([]);
-
   const [req, setReq] = useState({
     property: {
       id: 2,
@@ -19,7 +18,11 @@ function AddProperty() {
     },
     equipments: [],
   });
+
   useEffect(() => {
+    const userId = JSON.parse(localStorage.getItem("user"));
+
+    setReq({ ...req, property: { ...req.property, user_id: userId } });
     ExpressApi.get("/equipment")
       .then((res) => setEquip(res.data))
       .catch((err) => console.error(err));

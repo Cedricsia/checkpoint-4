@@ -3,6 +3,7 @@ import React from "react";
 import Home from "../pages/Home";
 import Property from "../pages/Property";
 import AddProperty from "../pages/AddProperty";
+import Profile from "../pages/Profile";
 
 function AppRoutes() {
   return (
@@ -10,6 +11,7 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/property/:id" element={<Property />} />
       <Route path="/add-property" element={<AddProperty />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }

@@ -14,13 +14,10 @@ function Home() {
   }, []);
 
   return (
-    <div className=" bg-secondary flex-col flex w-full h-[90vh]">
-      <div className="max-w-7xl ">
-        <div className="bg-blue-200 h-20 mt-10 "> </div>
-        <div className=" ">
-          {properties &&
-            properties.map((property) => <PropertyCard property={property} />)}
-        </div>
+    <div className="  ">
+      <div className="max-w-7xl mx-auto grid grid-cols-5">
+        {properties &&
+          properties.map((property) => <PropertyCard property={property} />)}
       </div>
     </div>
   );

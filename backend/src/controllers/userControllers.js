@@ -29,9 +29,11 @@ const read = (req, res) => {
 };
 
 const edit = (req, res) => {
-  const user = req.body;
+  const user = JSON.parse(req.body.user);
 
-  // TODO validations (length, format...)
+  if (Object.keys(req).includes("file")) {
+    user.image = req.file.filename;
+  }
 
   user.id = parseInt(req.params.id, 10);
 
@@ -81,6 +83,26 @@ const destroy = (req, res) => {
       res.sendStatus(500);
     });
 };
+const searchAllFromUser = (req, res) => {
+  const { id } = req.params;
+  const result = {};
+
+  models.user
+    .findAllFromUser(id)
+    .then(([row]) => {
+      const user = row[0];
+      result.user = user;
+      return models.property.findFromUserId(id);
+    })
+    .then(([property]) => {
+      result.property = property;
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
 
 module.exports = {
   browse,
@@ -88,4 +110,5 @@ module.exports = {
   edit,
   add,
   destroy,
+  searchAllFromUser,
 };

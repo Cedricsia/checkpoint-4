@@ -18,10 +18,17 @@ class UserManager extends AbstractManager {
     );
   }
 
-  update(item) {
+  update(user) {
     return this.database.query(
-      `update ${this.table} set title = ? where id = ?`,
-      [item.title, item.id]
+      `update ${this.table} set firstname = ?, lastname =?, pseudo=?, mail =? ,image=? where id = ?`,
+      [
+        user.firstname,
+        user.lastname,
+        user.pseudo,
+        user.mail,
+        user.image,
+        user.id,
+      ]
     );
   }
 
@@ -29,6 +36,13 @@ class UserManager extends AbstractManager {
     return this.database.query(`SELECT * FROM ${this.table} WHERE mail = ?`, [
       mail,
     ]);
+  }
+
+  findAllFromUser(id) {
+    return this.database.query(
+      `SELECT firstname,lastname,pseudo,image,mail FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
   }
 }
 
