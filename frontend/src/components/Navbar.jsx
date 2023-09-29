@@ -1,20 +1,32 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../public/images/logo.svg";
-import avatar from "../../public/images/avatar.svg";
+
 import ModalConnexion from "./Modalconnexion";
 import ModalCreateAccount from "./ModalCreateAccount";
+import ExpressApi from "../services/ExpressApi";
 
 function Navbar() {
-  const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const id = JSON.parse(localStorage.getItem("user"));
+    if (id) {
+      ExpressApi.get(`/user/${id}`)
+        .then((res) => {
+          setUser(res.data);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, []);
 
   const openConnectionModal = () => {
     document.getElementById("login").showModal();
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="">
       <div className="flex h-[10vh]  items-center justify-between bg-secondary border-b-2 border-primary ">
         <div className="flex flex-row items-center gap-2 ml-2">
           <button type="button" onClick={() => navigate("/")}>
@@ -24,47 +36,35 @@ function Navbar() {
             evasion
           </h1>
         </div>
-        <div>
-          <button
-            type="button"
-            className=" w-32 rounded-xl h-8 md:h-10 md:w-48 bg-primary   text-secondary flex items-center justify-center"
-            onClick={() => setVisible(!visible)}
-          >
-            Rechercher
-          </button>
-        </div>
-        <button
-          type="button"
-          className="text-primary"
-          onClick={openConnectionModal}
-        >
-          Se connecter
-        </button>
+        <NavLink to="/add-property">Ajouter un bien</NavLink>
 
         <div className="mr-2">
-          <img src={avatar} alt="" className="w-10 md:w-20 lg:w-20" />
+          {user ? (
+            <div className="avatar">
+              <div className="rounded-full h-12 md:h-20 mx-auto">
+                <NavLink to="/profile">
+                  <img
+                    src={`${import.meta.env.VITE_BACKEND_URL}/uploads/user/${
+                      user.image
+                    }`}
+                    alt="plat"
+                    className=""
+                  />
+                </NavLink>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="text-primary"
+              onClick={openConnectionModal}
+            >
+              Se connecter
+            </button>
+          )}
         </div>
       </div>
-      {visible && (
-        <div
-          id="recherche"
-          className="flex flex-row items-center justify-center gap-2 m-5 p-2"
-        >
-          <div>
-            <input type="text" className="bg-slate-600" />
-          </div>
-          <div className="flex flex-col">
-            <input type="date" name="" id="" className="bg-primary" />
 
-            <input type="date" name="" id="" className="bg-primary" />
-          </div>
-          <div>
-            <button type="button" className="btn btn-primary ">
-              Rechercher
-            </button>
-          </div>
-        </div>
-      )}
       <ModalCreateAccount />
       <ModalConnexion />
     </div>

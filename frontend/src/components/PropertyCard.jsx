@@ -29,21 +29,24 @@ function PropertyCard({ property }) {
         >
           &lt;
         </button>
-
-        <img
-          src={`${backendUrl}/uploads/property/${property.description.image[num]}`}
-          alt=""
-          className=" w-full rounded-lg"
-        />
-        <button
-          type="button"
-          className="absolute bg-primary rounded-full text-secondary bottom-1/2 right-0 w-6  "
-          onClick={() => {
-            handleNext(property.description.image);
-          }}
-        >
-          &gt;
-        </button>
+        <div className="avatar">
+          <div className=" rounded-xl">
+            <img
+              src={`${backendUrl}/uploads/property/${property.description.image[num]}`}
+              alt=""
+              className=" w-full rounded-lg"
+            />
+            <button
+              type="button"
+              className="absolute bg-primary rounded-full text-secondary bottom-1/2 right-0 w-6  "
+              onClick={() => {
+                handleNext(property.description.image);
+              }}
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
       </div>
       <button type="button" onClick={() => navigate(`property/${property.id}`)}>
         <p className="font-bold">{property.localisation}</p>

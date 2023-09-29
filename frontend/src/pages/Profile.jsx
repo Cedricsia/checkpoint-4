@@ -52,19 +52,21 @@ function Profile() {
   }, [refresh]);
 
   return (
-    <div className="mx-2">
+    <div className="mx-auto md:max-w-3xl lg:max-w-7xl text-lg md:text-xl">
       {user && (
         <div>
           <div>
-            <h1 className="text-center">{user.pseudo}</h1>
+            <h1 className="text-center text-primary font-bold mt-10 text-3xl  md:text-4xl  ">
+              {user.pseudo}
+            </h1>
           </div>
-          <div>
+          <div className="">
             {modify ? (
               <div>
                 <div className="flex flex-col items-center">
                   {file.length ? (
-                    <div className="avatar">
-                      <div className="rounded-full h-20 mx-auto">
+                    <div className="avatar my-4">
+                      <div className="rounded-full h-28 md:h-44 lg:h-44 mx-auto">
                         <img
                           src={URL.createObjectURL(file[0])}
                           className=""
@@ -75,8 +77,8 @@ function Profile() {
                   ) : (
                     <div>
                       {user.image ? (
-                        <div className="avatar">
-                          <div className="rounded-full h-20 mx-auto">
+                        <div className="avatar my-4">
+                          <div className="rounded-full h-28 md:h-44 lg:h-44 mx-auto">
                             <img
                               src={`${
                                 import.meta.env.VITE_BACKEND_URL
@@ -95,55 +97,56 @@ function Profile() {
                     type="file"
                     name=""
                     id=""
-                    className=""
+                    className="mb-5"
                     onChange={(e) => setFile(e.target.files)}
                   />
                 </div>
+                <div className="flex-col w-3/4 md:w-1/3  mx-auto">
+                  <div className="flex flex-row justify-between">
+                    <p>Nom:</p>
+                    <input
+                      type="text"
+                      defaultValue={user.firstname}
+                      className="bg-slate-200"
+                      onChange={(e) => handlechangeInput(e, "firstname")}
+                    />
+                  </div>
 
-                <div className="flex flex-row justify-between">
-                  <p>Nom:</p>
-                  <input
-                    type="text"
-                    defaultValue={user.firstname}
-                    className="bg-slate-200"
-                    onChange={(e) => handlechangeInput(e, "firstname")}
-                  />
-                </div>
-
-                <div className="flex flex-row justify-between">
-                  <p>Prenom:</p>
-                  <input
-                    type="text"
-                    defaultValue={user.lastname}
-                    className="bg-slate-200"
-                    onChange={(e) => handlechangeInput(e, "lastname")}
-                  />
-                </div>
-                <div className="flex flex-row justify-between">
-                  <p>Pseudo :</p>
-                  <input
-                    type="text"
-                    defaultValue={user.pseudo}
-                    className="bg-slate-200"
-                    onChange={(e) => handlechangeInput(e, "pseudo")}
-                  />
-                </div>
-                <div className="flex flex-row justify-between">
-                  <p>mail: </p>
-                  <input
-                    type="text"
-                    defaultValue={user.mail}
-                    className="bg-slate-200"
-                    onChange={(e) => handlechangeInput(e, "mail")}
-                  />
+                  <div className="flex flex-row justify-between">
+                    <p>Prenom:</p>
+                    <input
+                      type="text"
+                      defaultValue={user.lastname}
+                      className="bg-slate-200"
+                      onChange={(e) => handlechangeInput(e, "lastname")}
+                    />
+                  </div>
+                  <div className="flex flex-row justify-between">
+                    <p>Pseudo :</p>
+                    <input
+                      type="text"
+                      defaultValue={user.pseudo}
+                      className="bg-slate-200"
+                      onChange={(e) => handlechangeInput(e, "pseudo")}
+                    />
+                  </div>
+                  <div className="flex flex-row justify-between">
+                    <p>mail: </p>
+                    <input
+                      type="text"
+                      defaultValue={user.mail}
+                      className="bg-slate-200"
+                      onChange={(e) => handlechangeInput(e, "mail")}
+                    />
+                  </div>
                 </div>
               </div>
             ) : (
               <div>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center my-2">
                   {user.image ? (
                     <div className="avatar">
-                      <div className="rounded-full h-20 mx-auto">
+                      <div className="rounded-full h-28 md:h-32 lg:h-44 mx-auto">
                         <img
                           src={`${
                             import.meta.env.VITE_BACKEND_URL
@@ -157,11 +160,12 @@ function Profile() {
                     <img src={avatar} alt="" className="h-20 mx-auto" />
                   )}
                 </div>
-
-                <p>Nom: {user.firstname}</p>
-                <p>Prenom:{user.lastname}</p>
-                <p>Pseudo: {user.pseudo}</p>
-                <p>mail: {user.mail} </p>
+                <div className="flex-col flex items-center ">
+                  <p>Nom: {user.firstname}</p>
+                  <p>Prénom: {user.lastname}</p>
+                  <p>Pseudo: {user.pseudo}</p>
+                  <p>mail: {user.mail} </p>
+                </div>
               </div>
             )}
             <div className="flex flex-row justify-center">
@@ -185,8 +189,8 @@ function Profile() {
             </div>
           </div>
           <div>
-            <h1 className="text-center">propriété</h1>
-            <div className="grid grid-cols-2">
+            <h1 className="text-center text-2xl md:text-3xl">Propriétés</h1>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {property &&
                 property.map((elem) => (
                   <div className="flex flex-col items-center">

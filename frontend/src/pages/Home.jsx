@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import expressApi from "../services/ExpressApi";
 import PropertyCard from "../components/PropertyCard";
+import ModalSearch from "../components/ModalSearch";
 
 function Home() {
   const [properties, setPorperties] = useState(null);
+  const [city, setCity] = useState("");
+
   useEffect(() => {
     expressApi
       .get(`/property`)
@@ -15,10 +18,26 @@ function Home() {
 
   return (
     <div className="  ">
-      <div className="max-w-7xl mx-auto grid grid-cols-5">
-        {properties &&
-          properties.map((property) => <PropertyCard property={property} />)}
+      <div className="flex justify-center my-5">
+        <button
+          type="button"
+          className="btn btn-primary text-secondary"
+          onClick={() => document.getElementById("search").showModal()}
+        >
+          rechercher
+        </button>
       </div>
+      <div className="lg:max-w-7xl md:max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2  lg:grid-cols-4">
+        {properties &&
+          properties
+            .filter((elem) =>
+              elem.localisation
+                .toLocaleLowerCase()
+                .includes(city.toLocaleLowerCase())
+            )
+            .map((property) => <PropertyCard property={property} />)}
+      </div>
+      <ModalSearch properties={properties} setCity={setCity} />
     </div>
   );
 }

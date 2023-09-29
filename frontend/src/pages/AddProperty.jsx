@@ -76,16 +76,16 @@ function AddProperty() {
       <div>
         <h1 className="mt-5 mb-3 text-center font-bold">Infos generale :</h1>
 
-        <div className="flex flex-col mx-2 gap-3 my-3 ">
-          <div className="flex-row justify-between flex">
+        <div className="flex flex-col sm:mx-2 gap-3 my-3 md:max-w-2xl  md:mx-auto">
+          <div className="flex-row justify-between flex md:flex-col ">
             <label htmlFor="name">nom de l'annonce :</label>
             <input
               type="text"
-              className="bg-slate-200"
+              className="bg-slate-200 "
               onChange={(e) => handleInputChange(e, "name")}
             />
           </div>
-          <div className="flex-row justify-between flex">
+          <div className="flex-row justify-between flex md:flex-col ">
             <label htmlFor="localisation">Ville de votre bien:</label>
             <input
               type="text"
@@ -93,7 +93,7 @@ function AddProperty() {
               onChange={(e) => handleInputChange(e, "localisation")}
             />
           </div>
-          <div className="flex-col flex">
+          <div className="flex-col flex ">
             <label htmlFor="information">Resumé de l'annonce :</label>
             <textarea
               maxLength={170}
